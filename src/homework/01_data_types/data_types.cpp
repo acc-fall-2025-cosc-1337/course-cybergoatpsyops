@@ -1,4 +1,5 @@
 #include <iostream>
+#include "data_types.h"
 #include "int.h"
 
 int echo_variable(int num)
