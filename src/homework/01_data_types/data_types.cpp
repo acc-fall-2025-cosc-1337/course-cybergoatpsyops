@@ -1,13 +1,11 @@
-#include "data_types.h"
+#include <iostream>
+#include "int.h"
 
-//example
-int add_numbers(int num1, int num2)
+int echo_variable(int num)
 {
-	return num1 + num2;
+    int num1=7*7;
+    int num2=5*5;
+
+    std::cout << "Product 1: " << num1 << ", Product 2: " << num2 << std::endl;
+    return num;
 }
-
-//write function code here
-
-
-
-
