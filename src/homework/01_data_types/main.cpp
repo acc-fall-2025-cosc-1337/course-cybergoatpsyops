@@ -6,14 +6,14 @@ using std::endl;
 
 int main()
 {
-	int a = 6;
+	// Print the homework-specified outputs
+	int a = 7;
 	int b = 7;
+	cout << a << " x " << b << " = " << multiply_numbers(a, b) << endl << endl;
 
-	int sum = add_numbers(a, b);
-	int product = multiply_numbers(a, b);
-
-	cout << "add_numbers(" << a << ", " << b << ") = " << sum << endl;
-	cout << "multiply_numbers(" << a << ", " << b << ") = " << product << endl;
+	a = 5;
+	b = 5;
+	cout << a << " x " << b << " = " << multiply_numbers(a, b) << endl;
 
 	return 0;
 }
