@@ -1,9 +1,12 @@
 #include "hwexpressions.h"
+#include <iostream>
+using namespace std;
 
-//example
-int add_numbers(int num1, int num2)
+
+int add_numbers(int get_sales_tax, int get_tip_amount)
 {
-	return num1 + num2;
+	
+	return get_sales_tax + get_tip_amount;
 }
 
 //write function code here
