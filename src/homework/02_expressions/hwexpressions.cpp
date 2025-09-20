@@ -2,10 +2,9 @@
 #include <iostream>
 using namespace std;
 
-
-int main()
+double calculate_tax_from_input()
 {
-	double meal_amount, get_tip_amount, total;
+	double meal_amount, get_tip_amount;
 	std::cout << "Enter meal cost:";
 	std::cin >> meal_amount;
 	std::cout << "Enter tip amount:";
@@ -17,13 +16,14 @@ int main()
 	return tax_rate;
 
 	double tip= meal_amount * get_tip_amount;
-	double total = meal_cost + get_tip_amount + tax;
+	double total = meal_amount + get_tip_amount + tax;
+	return tip, total;
 
 	std:: cout << "Meal cost: $" << meal_amount <<std::endl;
 	std::cout <<"Tip: $" << tip <<std::endl;
 	std::cout <<"Tax: $" << tax <<std::endl;
 	std::cout<<"Total: $" << total <<std::endl;
-	return meal_cost, tip, tax, total;
+	
 	return 0;
 
 }
