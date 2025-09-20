@@ -16,8 +16,9 @@ double calculate_tax_from_input()
 	return tax_rate;
 
 	double tip= meal_amount * get_tip_amount;
+	return tip;
 	double total = meal_amount + get_tip_amount + tax;
-	return tip, total;
+	return total;
 
 	std:: cout << "Meal cost: $" << meal_amount <<std::endl;
 	std::cout <<"Tip: $" << tip <<std::endl;
