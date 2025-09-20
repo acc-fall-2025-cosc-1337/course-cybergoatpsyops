@@ -24,3 +24,17 @@ TEST_CASE("Verify get_tip_amount function")
 	REQUIRE(get_tip_amount(100.0, 0.15) == Approx(15.0));
 	REQUIRE(get_tip_amount(80.0, 0.20) == Approx(16.0));
 }
+double calculate_tax_from_input()
+{
+	double total, tip;
+	std::cout << "Enter total amount: ";
+	std::cin >> total;
+	std::cout << "Enter tip amount: ";
+	std::cin >> tip;
+
+	// Assume a fixed tax rate, e.g., 7%
+	const double tax_rate = 0.07;
+	double tax = (total - tip) * tax_rate;
+	std::cout << "Calculated tax: " << tax << std::endl;
+	return tax;
+}
