@@ -38,3 +38,22 @@ double calculate_tax_from_input()
 	std::cout << "Calculated tax: " << tax << std::endl;
 	return tax;
 }
+void print_meal_details()
+{
+	double meal_cost, tip_rate, tax_rate;
+	std::cout << "Enter meal cost: ";
+	std::cin >> meal_cost;
+	std::cout << "Enter tip rate (e.g., 0.15 for 15%): ";
+	std::cin >> tip_rate;
+	std::cout << "Enter tax rate (e.g., 0.07 for 7%): ";
+	std::cin >> tax_rate;
+
+	double tip = meal_cost * tip_rate;
+	double tax = meal_cost * tax_rate;
+	double total = meal_cost + tip + tax;
+
+	std::cout << "Meal cost: $" << meal_cost << std::endl;
+	std::cout << "Tip: $" << tip << std::endl;
+	std::cout << "Tax: $" << tax << std::endl;
+	std::cout << "Total: $" << total << std::endl;
+}
