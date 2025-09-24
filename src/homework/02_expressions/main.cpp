@@ -5,6 +5,7 @@
 
 int main()
 {
+	
 	double meal_cost = 50;
 	double tip_percentage = .2;
 
