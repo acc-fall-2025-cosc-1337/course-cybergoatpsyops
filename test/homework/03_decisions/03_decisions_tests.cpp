@@ -25,3 +25,29 @@ TEST_CASE("Test get_letter_grade_using_switch") {
 	REQUIRE(get_letter_grade_using_switch(-10) == "Invalid grade");
 	REQUIRE(get_letter_grade_using_switch(110) == "Invalid grade");
 }
+#include "switch.h"
+string get_letter_grade_using_switch(int grade)
+{
+	if (grade < 0 || grade > 100)
+		return "Invalid grade";
+
+	switch (grade / 10)
+	{
+		case 10:
+		case 9:
+			return "A";
+			break;
+		case 8:
+			return "B";
+			break;
+		case 7:
+			return "C";
+			break;
+		case 6:
+			return "D";
+			break;
+		default:
+			return "F";
+			break;
+	}
+}
