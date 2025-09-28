@@ -4,6 +4,8 @@
 
 using std::string;
 
+
+//Write code for function(s) code here
 string get_letter_grade_using_if(int grade)
 {
     //Write code for function(s) code here
@@ -32,7 +34,3 @@ string get_letter_grade_using_if(int grade)
         return "Invalid grade";
     }
 }
-
-
-
-//Write code for function(s) code here
