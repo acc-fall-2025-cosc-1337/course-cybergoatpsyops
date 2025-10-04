@@ -5,4 +5,6 @@
 //returns a string
 
 
+#include <string>
 
+std::string get_generation(int year);
