@@ -1,13 +1,8 @@
+// data_types.cpp
 #include "data_types.h"
 
-//example
-int add_numbers(int num1, int num2)
+// Function definition
+double multiply_numbers(double num1, double num2)
 {
-	return num1 + num2;
+    return num1 * num2;
 }
-
-//write function code here
-
-
-
-
