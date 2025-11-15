@@ -118,6 +118,7 @@ bool TicTacToe::check_winner()
     return false;
 }
 
+
 std::ostream& operator<<(std::ostream& out, const TicTacToe& game)
 {
     game.display_board();
