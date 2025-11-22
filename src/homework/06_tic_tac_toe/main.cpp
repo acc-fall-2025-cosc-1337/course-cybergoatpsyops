@@ -1,13 +1,15 @@
 #include <iostream>
-#include "tic_tac_toe_3.h"
+#include "tic_tac_toe.h"
 #include "tic_tac_toe_manager.h"
+#include "tic_tac_toe_3.h"
+#include "tic_tac_toe_4.h"
 using namespace std;
 
 
 int main()
 {
-    TicTacToe3 manager;
-    TicTacToe game;
+    TicTacToeManager manager;
+    TicTacToe game(3);
     string first_player;
     char choice = 'y';
     int o_wins, x_wins, ties;
@@ -17,6 +19,24 @@ int main()
 
     while (choice == 'y' || choice == 'Y')
     {
+        std::unique_ptr<TicTacToe> game;
+        int board_size;
+
+        do {
+            std::cout << "Choose board size (3 or 4): ";
+            std::cin >> board_size;
+            if (board_size != 3 && board_size != 4) {
+                std::cout << "Invalid choice! Please enter 3 or 4.\n";
+            }
+        } while (board_size != 3 && board_size != 4);
+
+        if (board_size == 3) {
+            game = std::make_unique<TicTacToe3>();
+        } else {
+            game = std::make_unique<TicTacToe4>();
+        }
+
+
         do
         {
         cout << "Enter first player (X or O): ";
@@ -29,16 +49,15 @@ int main()
 
         } while (first_player != "X" && first_player != "O");
 
-        
-        game.start_game(first_player);
+        game->start_game(first_player);
 
         int position;
 
         
-        while (!game.game_over())
+        while (!game->game_over())
         {
-            game.display_board();
-            cout << "Player " << game.get_player()
+            game->display_board();
+            cout << "Player " << game->get_player()
                  << ", enter a position (1-9): ";
             cin >> position;
 
@@ -49,13 +68,12 @@ int main()
                 continue;
             }
 
-            game.mark_board(position);
+            game->mark_board(position);
         }
 
         cout << "\nFinal Board:\n";
-        game.display_board();
-
-        string winner = game.get_winner();
+        game->display_board();
+        string winner = game->get_winner();
 
         if (winner == "C")
         {
@@ -66,7 +84,7 @@ int main()
             cout << "🎉 Player " << winner << " wins! 🎉\n";
         }
 
-        manager.save_game(game);
+        manager.save_game(game);   
         manager.get_winner_total(o_wins, x_wins, ties);
         cout<< "Scoreboard:\n";
         cout << "Player X Wins: " << x_wins << "\n";
@@ -77,10 +95,6 @@ int main()
         cout << "Would you like to play another game? (Y/N): ";
         cin >> choice;
         cout << "\n";
-
-
-
-
         
     }
 
