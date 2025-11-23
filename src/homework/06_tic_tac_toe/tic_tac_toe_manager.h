@@ -1,22 +1,32 @@
-//h
-#include "tic_tac_toe_3.h"
+#ifndef TIC_TAC_TOE_MANAGER_H
+#define TIC_TAC_TOE_MANAGER_H
+
+#include "tic_tac_toe.h"
 #include <vector>
-#include <string>
+#include <memory>
+
 using namespace std;
 
-class TicTacToe3  
+class TicTacToeManager
 {
 public:
-
-    void save_game(TicTacToe b);
+    // 2) Parameter is a reference to unique_ptr<TicTacToe>
+    void save_game(unique_ptr<TicTacToe>& game);
 
     void get_winner_total(int& o, int& x, int& t);
 
-    private:
-    vector<TicTacToe> games;
-    int o_wins = 0;
-    int x_wins = 0;
-    int ties = 0;
+    // 3) Display all games played
+    void display_games() const;
+
+private:
+    // 1) Vector of unique_ptr to TicTacToe
+    vector<unique_ptr<TicTacToe>> games;
+
+    int x_win{0};
+    int o_win{0};
+    int ties{0};
 
     void update_winner_count(string winner);
 };
+
+#endif
