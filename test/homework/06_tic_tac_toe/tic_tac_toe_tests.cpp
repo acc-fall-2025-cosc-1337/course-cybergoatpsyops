@@ -65,3 +65,47 @@ TEST_CASE("Test if board is full - game over ")
 	REQUIRE(true  ==  tic_tac_toe.game_over());
 
 }
+
+TEST_CASE("Test is game over with a vector that has 16 pegs with value of space 4")
+{
+    unique_ptr<TicTacToe> tic_tac_toe = make_unique<TicTacToe4>();
+    REQUIRE(false == tic_tac_toe->game_over());
+}
+
+TEST_CASE("Test is first player set correctly when starting the game 4")
+{
+    unique_ptr<TicTacToe> tic_tac_toe = make_unique<TicTacToe4>();
+    tic_tac_toe->start_game("X");
+
+    REQUIRE(tic_tac_toe->get_player() == "X");
+}
+
+TEST_CASE("Test if board is full - game over 4")
+{
+    unique_ptr<TicTacToe> tic_tac_toe = make_unique<TicTacToe4>();
+    tic_tac_toe->start_game("X");
+
+    // fill 16 spaces (no winner)
+    tic_tac_toe->mark_board(1);
+    tic_tac_toe->mark_board(2);
+    tic_tac_toe->mark_board(3);
+    tic_tac_toe->mark_board(4);
+
+    tic_tac_toe->mark_board(5);
+    tic_tac_toe->mark_board(6);
+    tic_tac_toe->mark_board(7);
+    tic_tac_toe->mark_board(8);
+
+    tic_tac_toe->mark_board(9);
+    tic_tac_toe->mark_board(10);
+    tic_tac_toe->mark_board(11);
+    tic_tac_toe->mark_board(12);
+
+    tic_tac_toe->mark_board(13);
+    tic_tac_toe->mark_board(14);
+    tic_tac_toe->mark_board(15);
+    tic_tac_toe->mark_board(16);
+
+    REQUIRE(true == tic_tac_toe->game_over());
+    REQUIRE(tic_tac_toe->get_winner() == "C");
+}
