@@ -1,149 +1,126 @@
 #include "tic_tac_toe.h"
+#include <cmath>
 
-#include <iostream>
-#include <algorithm>
-#include <cctype>
+using std::cout;
+using std::string;
+
+TicTacToe::TicTacToe(int size) : pegs(size * size, " ") {}
 
 bool TicTacToe::game_over()
 {
-	if (check_column_win() || check_row_win() || check_diagonal_win())
-	{
-		set_winner();
-		return true;
-	}
+    if (check_winner())
+    {
+        winner = (player == "X" ? "O" : "X");
+        return true;
+    }
 
-	if (check_board_full())
-	{
-		winner = "C";
-		return true;
-	}
+    if (check_board_full())
+    {
+        winner = "C";
+        return true;
+    }
 
-	return false;
+    return false;
 }
 
-void TicTacToe::start_game(std::string first_player)
+void TicTacToe::start_game(string first_player)
 {
-	if (!first_player.empty())
-	{
-		first_player[0] = static_cast<char>(std::toupper(first_player[0]));
-	}
+    if (first_player == "x" || first_player == "X")
+        player = "X";
+    else
+        player = "O";
 
-	if (first_player == "X" || first_player == "O")
-	{
-		player = first_player;
-	}
-	else
-	{
-		player = "X";
-	}
-
-	clear_board();
-	winner.clear();
+    clear_board();
+    winner = "C";
 }
 
 void TicTacToe::mark_board(int position)
 {
-	if (position >= 1 && position <= static_cast<int>(pegs.size()))
-	{
-		pegs[position - 1] = player;
-		set_next_player();
-	}
-}
+    if (position < 1 || position > static_cast<int>(pegs.size()))
+    {
+        cout << "Invalid position! Must be between 1 and " << pegs.size() << ".\n";
+        return;
+    }
 
-std::string TicTacToe::get_player() const
-{
-	return player;
-}
+    if (pegs[position - 1] != " ")
+    {
+        cout << "That spot is already taken! You lose your turn.\n";
+        set_next_player();
+        return;
+    }
 
-std::string TicTacToe::get_winner() const
-{
-	return winner;
+    pegs[position - 1] = player;
+    set_next_player();
 }
 
 void TicTacToe::display_board() const
 {
-	for (std::size_t i = 0; i < pegs.size(); i += 3)
-	{
-		std::cout << pegs[i] << " | " << pegs[i + 1] << " | " << pegs[i + 2] << '\n';
-		if (i < pegs.size() - 3)
-		{
-			std::cout << "---------" << '\n';
-		}
-	}
+    std::size_t size = static_cast<std::size_t>(std::sqrt(pegs.size()));
+    cout << "\n";
+    for (std::size_t i = 0; i < pegs.size(); i += size)
+    {
+        for (std::size_t j = 0; j < size; j++)
+        {
+            cout << " " << pegs[i + j];
+            if (j < size - 1) cout << " |";
+        }
+        cout << "\n";
+        if (i < pegs.size() - size)
+        {
+            for (std::size_t k = 0; k < size; k++)
+            {
+                cout << "---";
+                if (k < size - 1) cout << "|";
+            }
+            cout << "\n";
+        }
+    }
+    cout << "\n";
 }
 
 void TicTacToe::set_next_player()
 {
-	player = (player == "X") ? "O" : "X";
+    player = (player == "X") ? "O" : "X";
 }
 
-bool TicTacToe::check_column_win() const
+bool TicTacToe::check_board_full()
 {
-	for (int col = 0; col < 3; ++col)
-	{
-		int index = col;
-		if (pegs[index] != " " &&
-		    pegs[index] == pegs[index + 3] &&
-		    pegs[index] == pegs[index + 6])
-		{
-			return true;
-		}
-	}
+    for (auto& peg : pegs)
+        if (peg == " ")
+            return false;
 
-	return false;
-}
-
-bool TicTacToe::check_row_win() const
-{
-	for (int row = 0; row < 3; ++row)
-	{
-		int index = row * 3;
-		if (pegs[index] != " " &&
-		    pegs[index] == pegs[index + 1] &&
-		    pegs[index] == pegs[index + 2])
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
-
-bool TicTacToe::check_diagonal_win() const
-{
-	if (pegs[0] != " " && pegs[0] == pegs[4] && pegs[0] == pegs[8])
-	{
-		return true;
-	}
-
-	if (pegs[2] != " " && pegs[2] == pegs[4] && pegs[2] == pegs[6])
-	{
-		return true;
-	}
-
-	return false;
-}
-
-bool TicTacToe::check_board_full() const
-{
-	for (const auto& peg : pegs)
-	{
-		if (peg == " ")
-		{
-			return false;
-		}
-	}
-
-	return true;
+    return true;
 }
 
 void TicTacToe::clear_board()
 {
-	std::fill(pegs.begin(), pegs.end(), " ");
-	winner.clear();
+    for (auto& peg : pegs)
+        peg = " ";
 }
 
-void TicTacToe::set_winner()
+bool TicTacToe::check_winner()
 {
-	winner = (player == "X") ? "O" : "X";
+    if (check_row_win()) return true;
+    if (check_column_win()) return true;
+    if (check_diagonal_win()) return true;
+    return false;
+}
+
+bool TicTacToe::check_row_win() { return false; }
+bool TicTacToe::check_column_win() { return false; }
+bool TicTacToe::check_diagonal_win() { return false; }
+
+std::ostream& operator<<(std::ostream& out, const TicTacToe& game)
+{
+    game.display_board();
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, TicTacToe& game)
+{
+    int position;
+    std::cout << "Player " << game.player << ", enter position: ";
+    in >> position;
+    game.mark_board(position);
+    return in;
 }

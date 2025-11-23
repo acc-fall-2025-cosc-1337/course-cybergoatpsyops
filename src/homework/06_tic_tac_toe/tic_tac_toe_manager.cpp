@@ -1,30 +1,21 @@
 #include "tic_tac_toe_manager.h"
 
-void TicTacToeManager::save_game(TicTacToe b)
+void TicTacToeManager::save_game(std::unique_ptr<TicTacToe>& game)
 {
-	games.push_back(b);
-	update_winner_count(b.get_winner());
-}
-
-void TicTacToeManager::get_winner_total(int& o, int& w, int& t) const
-{
-	o = o_win;
-	w = x_win;
-	t = ties;
+    update_winner_count(game->get_winner());
+    games.push_back(std::move(game));
 }
 
 void TicTacToeManager::update_winner_count(std::string winner)
 {
-	if (winner == "X")
-	{
-		++x_win;
-	}
-	else if (winner == "O")
-	{
-		++o_win;
-	}
-	else
-	{
-		++ties;
-	}
+    if (winner == "X") x_win++;
+    else if (winner == "O") o_win++;
+    else ties++;
+}
+
+void TicTacToeManager::get_winner_totals(int& o, int& x, int& t)
+{
+    o = o_win;
+    x = x_win;
+    t = ties;
 }

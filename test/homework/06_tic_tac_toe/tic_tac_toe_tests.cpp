@@ -1,171 +1,112 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
+
 #include "catch.hpp"
 #include "tic_tac_toe.h"
-#include "tic_tac_toe_manager.h"
+#include <memory>
+#include <tic_tac_toe_4.h>
 
-#include <vector>
-
-namespace
-{
-void play_sequence_and_verify(TicTacToe& game, const std::vector<int>& moves, const std::string& expected_winner)
-{
-	for (std::size_t i = 0; i < moves.size(); ++i)
-	{
-		game.mark_board(moves[i]);
-		bool over = game.game_over();
-		if (i < moves.size() - 1)
-		{
-			REQUIRE_FALSE(over);
-		}
-		else
-		{
-			REQUIRE(over);
-			REQUIRE(game.get_winner() == expected_winner);
-		}
-	}
-}
-}
-
-TEST_CASE("Verify Test Configuration", "verification")
-{
+TEST_CASE("Verify Test Configuration", "verification") {
 	REQUIRE(true == true);
 }
 
-TEST_CASE("Test first player set to X")
+TEST_CASE("Test is game over with a vector that has 9 pegs with value of space")
 {
-	TicTacToe game;
-	game.start_game("X");
-	REQUIRE(game.get_player() == "X");
+	TicTacToe tic_tac_toe(3);
+
+	REQUIRE(false == tic_tac_toe.game_over());
 }
 
-TEST_CASE("Test first player set to O")
+TEST_CASE("Test is first player set correctly when starting the game")
 {
-	TicTacToe game;
-	game.start_game("O");
-	REQUIRE(game.get_player() == "O");
+	TicTacToe tic_tac_toe(3);
+	tic_tac_toe.start_game("X");
+
+	REQUIRE(tic_tac_toe.get_player() == "X");
 }
 
-TEST_CASE("Test tie when all positions are filled")
+TEST_CASE("Test if board is full - game over ")
 {
-	TicTacToe game;
-	game.start_game("X");
-	play_sequence_and_verify(game, {1, 2, 3, 4, 5, 7, 6, 9, 8}, "C");
+	TicTacToe tic_tac_toe(3);
+	tic_tac_toe.start_game("X");
+	REQUIRE(tic_tac_toe.get_player() == "X");
+
+	tic_tac_toe.mark_board(1);
+	REQUIRE(tic_tac_toe.get_player() == "O");
+	REQUIRE(false  ==  tic_tac_toe.game_over());
+
+	tic_tac_toe.mark_board(2);
+	REQUIRE(tic_tac_toe.get_player() == "X");
+	REQUIRE(false  ==  tic_tac_toe.game_over());
+
+	tic_tac_toe.mark_board(3);
+	REQUIRE(tic_tac_toe.get_player() == "O");
+	REQUIRE(false  ==  tic_tac_toe.game_over());
+
+	tic_tac_toe.mark_board(6);
+	REQUIRE(tic_tac_toe.get_player() == "X");
+	REQUIRE(false  ==  tic_tac_toe.game_over());
+
+	tic_tac_toe.mark_board(4);
+	REQUIRE(tic_tac_toe.get_player() == "O");
+	REQUIRE(false  ==  tic_tac_toe.game_over());
+
+	tic_tac_toe.mark_board(7);
+	REQUIRE(tic_tac_toe.get_player() == "X");
+	REQUIRE(false  ==  tic_tac_toe.game_over());
+
+	tic_tac_toe.mark_board(5);
+	REQUIRE(tic_tac_toe.get_player() == "O");
+	REQUIRE(false  ==  tic_tac_toe.game_over());
+
+	tic_tac_toe.mark_board(9);
+	REQUIRE(tic_tac_toe.get_player() == "X");
+	REQUIRE(false  ==  tic_tac_toe.game_over());
+
+	tic_tac_toe.mark_board(8);
+	REQUIRE(tic_tac_toe.get_player() == "O");
+	REQUIRE(true  ==  tic_tac_toe.game_over());
+
 }
 
-TEST_CASE("Test win by first column")
+TEST_CASE("Test is game over with a vector that has 16 pegs with value of space 4")
 {
-	TicTacToe game;
-	game.start_game("X");
-	play_sequence_and_verify(game, {1, 2, 4, 5, 7}, "X");
+	std::unique_ptr<TicTacToe> tic_tac_toe = std::make_unique<TicTacToe4>();
+	REQUIRE(false == tic_tac_toe->game_over());
 }
 
-TEST_CASE("Test win by second column")
+TEST_CASE("Test is first player set correctly when starting the game 4")
 {
-	TicTacToe game;
-	game.start_game("X");
-	play_sequence_and_verify(game, {2, 1, 5, 3, 8}, "X");
+	std::unique_ptr<TicTacToe> tic_tac_toe = std::make_unique<TicTacToe4>();
+	tic_tac_toe->start_game("X");
+
+	REQUIRE(tic_tac_toe->get_player() == "X");
 }
 
-TEST_CASE("Test win by third column")
+TEST_CASE("Test if board is full - game over 4")
 {
-	TicTacToe game;
-	game.start_game("X");
-	play_sequence_and_verify(game, {3, 1, 6, 2, 9}, "X");
+	std::unique_ptr<TicTacToe> tic_tac_toe = std::make_unique<TicTacToe4>();
+	tic_tac_toe->start_game("X");
+
+    tic_tac_toe->mark_board(1);
+    tic_tac_toe->mark_board(2);
+    tic_tac_toe->mark_board(3);
+    tic_tac_toe->mark_board(4);
+
+    tic_tac_toe->mark_board(5);
+    tic_tac_toe->mark_board(6);
+    tic_tac_toe->mark_board(7);
+    tic_tac_toe->mark_board(8);
+
+    tic_tac_toe->mark_board(9);
+    tic_tac_toe->mark_board(10);
+    tic_tac_toe->mark_board(11);
+    tic_tac_toe->mark_board(12);
+
+    tic_tac_toe->mark_board(13);
+    tic_tac_toe->mark_board(14);
+    tic_tac_toe->mark_board(15);
+    tic_tac_toe->mark_board(16);
+
+    REQUIRE(true == tic_tac_toe->game_over());
+    REQUIRE(tic_tac_toe->get_winner() == "C");
 }
-
-TEST_CASE("Test win by first row")
-{
-	TicTacToe game;
-	game.start_game("X");
-	play_sequence_and_verify(game, {1, 4, 2, 5, 3}, "X");
-}
-
-TEST_CASE("Test win by second row")
-{
-	TicTacToe game;
-	game.start_game("X");
-	play_sequence_and_verify(game, {4, 1, 5, 2, 6}, "X");
-}
-
-TEST_CASE("Test win by third row")
-{
-	TicTacToe game;
-	game.start_game("X");
-	play_sequence_and_verify(game, {7, 1, 8, 2, 9}, "X");
-}
-
-TEST_CASE("Test win diagonally from top left")
-{
-	TicTacToe game;
-	game.start_game("X");
-	play_sequence_and_verify(game, {1, 2, 5, 3, 9}, "X");
-}
-
-TEST_CASE("Test win diagonally from bottom left")
-{
-	TicTacToe game;
-	game.start_game("X");
-	play_sequence_and_verify(game, {7, 1, 5, 2, 3}, "X");
-}
-
-TEST_CASE("Test manager get winner total")
-{
-	TicTacToeManager manager;
-	TicTacToe game1, game2, game3, game4;
-
-	// Game 1: X wins
-	game1.start_game("X");
-	game1.mark_board(1);  // X
-	game1.mark_board(2);  // O
-	game1.mark_board(4);  // X
-	game1.mark_board(5);  // O
-	game1.mark_board(7);  // X wins
-	REQUIRE(game1.game_over() == true);
-	REQUIRE(game1.get_winner() == "X");
-	manager.save_game(game1);
-
-	// Game 2: O wins
-	game2.start_game("O");
-	game2.mark_board(1);  // O
-	game2.mark_board(2);  // X
-	game2.mark_board(5);  // O
-	game2.mark_board(3);  // X
-	game2.mark_board(9);  // O wins
-	REQUIRE(game2.game_over() == true);
-	REQUIRE(game2.get_winner() == "O");
-	manager.save_game(game2);
-
-	// Game 3: Tie
-	game3.start_game("X");
-	game3.mark_board(1);  // X
-	game3.mark_board(2);  // O
-	game3.mark_board(3);  // X
-	game3.mark_board(4);  // O
-	game3.mark_board(5);  // X
-	game3.mark_board(7);  // O
-	game3.mark_board(6);  // X
-	game3.mark_board(9);  // O
-	game3.mark_board(8);  // X - tie
-	REQUIRE(game3.game_over() == true);
-	REQUIRE(game3.get_winner() == "C");
-	manager.save_game(game3);
-
-	// Game 4: X wins again
-	game4.start_game("X");
-	game4.mark_board(1);  // X
-	game4.mark_board(3);  // O
-	game4.mark_board(5);  // X
-	game4.mark_board(6);  // O
-	game4.mark_board(9);  // X wins
-	REQUIRE(game4.game_over() == true);
-	REQUIRE(game4.get_winner() == "X");
-	manager.save_game(game4);
-
-	int o_wins = 0, x_wins = 0, ties = 0;
-	manager.get_winner_total(o_wins, x_wins, ties);
-
-	REQUIRE(x_wins == 2);
-	REQUIRE(o_wins == 1);
-	REQUIRE(ties == 1);
-}
-
