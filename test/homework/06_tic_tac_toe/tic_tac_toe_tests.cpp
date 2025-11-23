@@ -2,6 +2,8 @@
 
 #include "catch.hpp"
 #include "tic_tac_toe.h"
+#include <memory>
+#include <tic_tac_toe_4.h>
 
 TEST_CASE("Verify Test Configuration", "verification") {
 	REQUIRE(true == true);
@@ -9,14 +11,14 @@ TEST_CASE("Verify Test Configuration", "verification") {
 
 TEST_CASE("Test is game over with a vector that has 9 pegs with value of space")
 {
-	TicTacToe tic_tac_toe;
+	TicTacToe tic_tac_toe(3);
 
 	REQUIRE(false == tic_tac_toe.game_over());
 }
 
 TEST_CASE("Test is first player set correctly when starting the game")
 {
-	TicTacToe tic_tac_toe;
+	TicTacToe tic_tac_toe(3);
 	tic_tac_toe.start_game("X");
 
 	REQUIRE(tic_tac_toe.get_player() == "X");
@@ -24,7 +26,7 @@ TEST_CASE("Test is first player set correctly when starting the game")
 
 TEST_CASE("Test if board is full - game over ")
 {
-	TicTacToe tic_tac_toe;
+	TicTacToe tic_tac_toe(3);
 	tic_tac_toe.start_game("X");
 	REQUIRE(tic_tac_toe.get_player() == "X");
 
@@ -68,24 +70,23 @@ TEST_CASE("Test if board is full - game over ")
 
 TEST_CASE("Test is game over with a vector that has 16 pegs with value of space 4")
 {
-    unique_ptr<TicTacToe> tic_tac_toe = make_unique<TicTacToe4>();
-    REQUIRE(false == tic_tac_toe->game_over());
+	std::unique_ptr<TicTacToe> tic_tac_toe = std::make_unique<TicTacToe4>();
+	REQUIRE(false == tic_tac_toe->game_over());
 }
 
 TEST_CASE("Test is first player set correctly when starting the game 4")
 {
-    unique_ptr<TicTacToe> tic_tac_toe = make_unique<TicTacToe4>();
-    tic_tac_toe->start_game("X");
+	std::unique_ptr<TicTacToe> tic_tac_toe = std::make_unique<TicTacToe4>();
+	tic_tac_toe->start_game("X");
 
-    REQUIRE(tic_tac_toe->get_player() == "X");
+	REQUIRE(tic_tac_toe->get_player() == "X");
 }
 
 TEST_CASE("Test if board is full - game over 4")
 {
-    unique_ptr<TicTacToe> tic_tac_toe = make_unique<TicTacToe4>();
-    tic_tac_toe->start_game("X");
+	std::unique_ptr<TicTacToe> tic_tac_toe = std::make_unique<TicTacToe4>();
+	tic_tac_toe->start_game("X");
 
-    // fill 16 spaces (no winner)
     tic_tac_toe->mark_board(1);
     tic_tac_toe->mark_board(2);
     tic_tac_toe->mark_board(3);
