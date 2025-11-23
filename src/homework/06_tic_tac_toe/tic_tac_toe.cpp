@@ -4,11 +4,13 @@
 using std::cout;
 using std::string;
 
+TicTacToe::TicTacToe(int size) : pegs(size * size, " ") {}
+
 bool TicTacToe::game_over()
 {
     if (check_winner())
     {
-        winner = (player == "X" ? "O" : "X"); 
+        winner = (player == "X" ? "O" : "X");
         return true;
     }
 
@@ -35,10 +37,10 @@ void TicTacToe::start_game(string first_player)
 void TicTacToe::mark_board(int position)
 {
     if (position < 1 || position > static_cast<int>(pegs.size()))
-{
-     cout << "Invalid position! Must be between 1 and " << pegs.size() << ".\n";
-    return;
-}
+    {
+        cout << "Invalid position! Must be between 1 and " << pegs.size() << ".\n";
+        return;
+    }
 
     if (pegs[position - 1] != " ")
     {
@@ -98,26 +100,15 @@ void TicTacToe::clear_board()
 
 bool TicTacToe::check_winner()
 {
-    std::size_t size = static_cast<std::size_t>(std::sqrt(pegs.size()));
-    int win_combos[8][3] = {
-        {0, 1, 2}, {3, 4, 5}, {6, 7, 8},
-        {0, 3, 6}, {1, 4, 7}, {2, 5, 8},
-        {0, 4, 8}, {2, 4, 6}
-    };
-
-    for (auto& combo : win_combos)
-    {
-        if (pegs[combo[0]] != " " &&
-            pegs[combo[0]] == pegs[combo[1]] &&
-            pegs[combo[1]] == pegs[combo[2]])
-        {
-            return true;
-        }
-    }
-
+    if (check_row_win()) return true;
+    if (check_column_win()) return true;
+    if (check_diagonal_win()) return true;
     return false;
 }
 
+bool TicTacToe::check_row_win() { return false; }
+bool TicTacToe::check_column_win() { return false; }
+bool TicTacToe::check_diagonal_win() { return false; }
 
 std::ostream& operator<<(std::ostream& out, const TicTacToe& game)
 {
