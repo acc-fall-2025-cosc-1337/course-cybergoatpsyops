@@ -5,6 +5,6 @@ int multiply_numbers(int num1, int num2);
 
 //write function prototype here
 
-
+int divide_number(int num1, int num2);
 
 
